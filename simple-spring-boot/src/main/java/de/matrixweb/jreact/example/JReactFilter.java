@@ -46,18 +46,20 @@ public class JReactFilter implements Filter {
     chain.doFilter(new RequestWrapper((HttpServletRequest) request), wrapper);
 
     // JavaScript is single-threaded
-    // either recreate like here (bad for performance but easy) or use an object
-    // pool
+    // either recreate like here (bad for performance but easy)
+    // or use an object pool
     JReact react = new JReact(true);
     react.addRequirePath(".");
 
     Map<String, Object> appProps = wrapper.toJson();
     String app = react.renderToString("./public/app.js", appProps);
+    react.reset();
 
     Map<String, Object> frameProps = new HashMap<>();
     frameProps.put("body", app);
-    react.reset();
+    frameProps.put("state", appProps);
     String html = react.renderToStaticMarkup("./public/frame.js", frameProps);
+    react.reset();
 
     response.setContentType("text/html");
     response.getWriter().print(html);
