@@ -9,6 +9,6 @@
   It should be sufficient to run the following commands in the simple-spring-boot directory.
   ```shell
   mvn clean package
-  java -jar java -jar target/jreact-example-0.0.1-SNAPSHOT.jar
+  java -jar target/jreact-example-0.0.1-SNAPSHOT.jar
   ```
   Then open the url http://localhost:8080 with your browser.
